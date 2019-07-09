@@ -43,7 +43,11 @@ namespace ProcessExecutor.Terminal.Jobs
                 IsExcuting = true;
             }
             Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is starting...");
-            Thread.Sleep(10000);
+            Task.Delay(10000).Wait();
+            Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is running...");
+            Task.Delay(10000).Wait();
+            Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is running...");
+            Task.Delay(10000).Wait();
             lock (padlock)
             {
                 IsExcuting = false;

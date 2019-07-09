@@ -16,5 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProcessExecutor.Infra\ProcessExecutor.Infra.csproj" />
     <ProjectReference Include="..\ProcessExecutor.Domain\ProcessExecutor.Domain.csproj" />
+    <ProjectReference Include="..\LegacySystemsIntegration\LegacySystemsIntegration.csproj" />
+    <ProjectReference Include="..\ProcessExecutor.Common\ProcessExecutor.Common.csproj" />
   </ItemGroup>
 </Project>

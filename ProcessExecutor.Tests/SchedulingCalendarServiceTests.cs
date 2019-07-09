@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ProcessExecutor.Tests
 {
-    public class UnitTest1
+    public class SchedulingCalendarServiceTests
     {
         [Fact]
         public void AddFutureScheduling_Success()

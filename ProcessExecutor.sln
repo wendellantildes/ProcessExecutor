@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExecutor.Infra", "Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExecutor.Tests", "ProcessExecutor.Tests\ProcessExecutor.Tests.csproj", "{80212EE4-C565-4564-8774-CF599D67299F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacySystemsIntegration", "LegacySystemsIntegration\LegacySystemsIntegration.csproj", "{AF937E37-70C7-4763-B31C-2AFFB26EC318}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessExecutor.Common", "ProcessExecutor.Common\ProcessExecutor.Common.csproj", "{A38243C9-EC4F-42C9-AD54-1D635159754E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +35,13 @@ Global
 		{80212EE4-C565-4564-8774-CF599D67299F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80212EE4-C565-4564-8774-CF599D67299F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80212EE4-C565-4564-8774-CF599D67299F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF937E37-70C7-4763-B31C-2AFFB26EC318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF937E37-70C7-4763-B31C-2AFFB26EC318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF937E37-70C7-4763-B31C-2AFFB26EC318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF937E37-70C7-4763-B31C-2AFFB26EC318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38243C9-EC4F-42C9-AD54-1D635159754E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38243C9-EC4F-42C9-AD54-1D635159754E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38243C9-EC4F-42C9-AD54-1D635159754E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38243C9-EC4F-42C9-AD54-1D635159754E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
