@@ -44,6 +44,7 @@ namespace ProcessExecutor.Terminal
             services.AddDbContext<ProcessExecutorContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDefaultSalaryPaymentProcessService, DefaultSalaryPaymentProcessService>();
+            services.AddScoped<ISchedulingService, SchedulingService>();
             services.AddScoped<IContinuityService, ContinuityService>();
             services.AddScoped<ISchedulingRepository, SchedulingRepository>();
             services.AddScoped<IProcessRepository, ProcessRepository>();

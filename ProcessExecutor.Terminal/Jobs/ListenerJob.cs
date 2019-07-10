@@ -4,6 +4,7 @@ using FluentScheduler;
 using Microsoft.Extensions.DependencyInjection;
 using ProcessExecutor.Domain.Interfaces;
 using ProcessExecutor.Domain.Processes;
+using ProcessExecutor.Terminal.Services.Interfaces;
 
 namespace ProcessExecutor.Terminal.Jobs
 {
@@ -45,15 +46,13 @@ namespace ProcessExecutor.Terminal.Jobs
                         {
                             Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Listening...");
 
-                            var schedulingRepository = scope.ServiceProvider.GetService<ISchedulingRepository>();
-                            //todo: extract to a service
-                            var schedulings = schedulingRepository.GetAllNotStarted();
-                            if (schedulings.Count == 0)
+                            var schedulingService = scope.ServiceProvider.GetService<ISchedulingService>();
+                            var scheduling = schedulingService.Next();
+                            if (scheduling == null)
                             {
                                 return;
                             }
-                            var first = schedulings[0];
-                            var date = first.Date;
+                            var date = scheduling.Date;
                             if (date <= now && date >= _lastExecution)
                             {
                                 Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Last exection at {_lastExecution}");
