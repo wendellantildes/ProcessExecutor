@@ -4,12 +4,18 @@ namespace ProcessExecutor.Domain.Processes
     public class Variable
     {
         public const string DebitFileName = "debit_file";
-        protected Variable(Guid taskId, string name, string value)
+        protected Variable(Guid taskId, string name, string value, VariableType type)
         {
             TaskId = taskId;
             Name = name;
             Value = value;
+            Type = type;
             Id = Guid.NewGuid();
+        }
+
+        protected Variable()
+        {
+
         }
 
         public Guid Id { get; private set; }
@@ -22,10 +28,11 @@ namespace ProcessExecutor.Domain.Processes
 
         public string Value { get; private set; }
 
+        public VariableType Type { get; private set; }
 
         public static Variable DebitFile(Guid taskId, string value)
         {
-            return new Variable(taskId, DebitFileName, value);
+            return new Variable(taskId, DebitFileName, value, VariableType.String);
         }
     }
 }

@@ -12,6 +12,11 @@ namespace ProcessExecutor.Domain.Processes
 
         }
 
+        protected Process() 
+        {
+
+        }
+
         protected Process(Guid id, List<Task> tasks)
         {
             Tasks = tasks;
@@ -24,6 +29,8 @@ namespace ProcessExecutor.Domain.Processes
         public List<Task> Tasks { get; private set; }
 
         public Status Status { get; private set; }
+
+        public List<Variable> Variables { get; private set; }
 
 
         public IReadOnlyList<Task> TasksFromStep(Step step)
@@ -74,6 +81,18 @@ namespace ProcessExecutor.Domain.Processes
             if (Owns(task) && (Status == Status.Started || Status == Status.WithError))
             {
                 task.Finish();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        public void Finish()
+        {
+            if (Status == Status.Started)
+            {
+                Status = Status.Finished;
             }
             else
             {

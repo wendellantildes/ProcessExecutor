@@ -8,7 +8,7 @@ namespace ProcessExecutor.Domain.Processes
     {
         public Task(Guid paymentId, LegacySystem system, Step step)
         {
-            PaymentId = paymentId;
+            ProcessId = paymentId;
             System = system;
             Step = step;
             Variables = new List<Variable>();
@@ -16,9 +16,14 @@ namespace ProcessExecutor.Domain.Processes
             Id = Guid.NewGuid();
         }
 
+        protected Task()
+        {
+
+        }
+
         public Guid Id { get; private set; }
 
-        public Guid PaymentId { get; private set; }
+        public Guid ProcessId { get; private set; }
 
         public LegacySystem System { get; set; }
 

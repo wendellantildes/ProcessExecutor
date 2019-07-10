@@ -3,55 +3,91 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentScheduler;
+using Microsoft.Extensions.DependencyInjection;
+using ProcessExecutor.Domain.Interfaces;
+using ProcessExecutor.Terminal.Services.Interfaces;
 
 namespace ProcessExecutor.Terminal.Jobs
 {
     public class ExecutorJob : IJob
     {
-        public static bool IsExcuting { private set; get; }
-
-        private ExecutorJob()
-        {
-            IsExcuting = false;
-        }
-
+        public static bool IsExecuting { private set; get; } = false;
         private static readonly object padlock = new object();
-        private static ExecutorJob _instance;
-        public static ExecutorJob Instance
+
+        //private ExecutorJob()
+        //{
+        //    IsExecuting = false;
+        //}
+
+        //private static ExecutorJob _instance;
+        //public static ExecutorJob Instance
+        //{
+        //    get
+        //    {
+        //        lock (padlock)
+        //        {
+        //            if (_instance == null)
+        //            {
+        //                _instance = new ExecutorJob();
+        //            }
+        //        }
+        //        return _instance;
+        //    }
+        //}
+
+        private readonly ServiceProvider _serviceProvider;
+
+        public ExecutorJob(ServiceProvider serviceProvider)
         {
-            get
-            {
-                lock (padlock)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new ExecutorJob();
-                    }
-                }
-                return _instance;
-            }
+            _serviceProvider = serviceProvider;
         }
 
         public void Execute()
         {
-            lock (padlock)
+            try
             {
-                if (IsExcuting)
+                lock (padlock)
                 {
-                    return;
+                    if (IsExecuting)
+                    {
+                        return;
+                    }
+                    IsExecuting = true;
                 }
-                IsExcuting = true;
-            }
-            Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is starting...");
-            Task.Delay(10000).Wait();
-            Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is running...");
-            Task.Delay(10000).Wait();
-            Console.WriteLine($"[{DateTime.Now}-{nameof(ExecutorJob)}] Executor is running...");
-            Task.Delay(10000).Wait();
-            lock (padlock)
+
+
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var continuityService = scope.ServiceProvider.GetService<IContinuityService>();
+
+                    //todo: test if it passes in finally block
+                    if (!continuityService.CanResume())
+                    {
+                        return;
+                    }
+
+                    var defaultService = scope.ServiceProvider.GetService<IDefaultSalaryPaymentProcessService>();
+                    defaultService.Start();
+                    defaultService.LoadCredits();
+                    defaultService.VerifyCredits();
+                    defaultService.LoadDebits();
+                    Task.Delay(10000).Wait();
+                    defaultService.VerifyDebits();
+                    defaultService.PaySalary();
+                }
+
+            }catch(Exception e)
             {
-                IsExcuting = false;
+
             }
+            finally
+            {
+                lock (padlock)
+                {
+                    IsExecuting = false;
+                }
+            }
+           
         }
     }
 }
