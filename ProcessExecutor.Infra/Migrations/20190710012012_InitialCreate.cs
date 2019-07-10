@@ -20,14 +20,27 @@ namespace ProcessExecutor.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Scheduling",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Finished = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Scheduling", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Task",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ProcessId = table.Column<Guid>(nullable: false),
-                    System = table.Column<int>(nullable: false),
-                    Step = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    SystemId = table.Column<int>(nullable: false),
+                    StepId = table.Column<int>(nullable: false),
+                    StatusId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,6 +99,9 @@ namespace ProcessExecutor.Infra.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Scheduling");
+
             migrationBuilder.DropTable(
                 name: "Variable");
 

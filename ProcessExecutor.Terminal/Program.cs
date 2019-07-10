@@ -45,6 +45,7 @@ namespace ProcessExecutor.Terminal
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDefaultSalaryPaymentProcessService, DefaultSalaryPaymentProcessService>();
             services.AddScoped<IContinuityService, ContinuityService>();
+            services.AddScoped<ISchedulingRepository, SchedulingRepository>();
             services.AddScoped<IProcessRepository, ProcessRepository>();
             services.AddScoped<ISchedulingRepository, SchedulingRepository>();
         }

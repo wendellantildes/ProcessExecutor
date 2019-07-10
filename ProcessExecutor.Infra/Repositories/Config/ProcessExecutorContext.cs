@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using ProcessExecutor.Domain;
 using ProcessExecutor.Domain.Processes;
 
 namespace ProcessExecutor.Infra.Repositories.Config
@@ -18,6 +19,7 @@ namespace ProcessExecutor.Infra.Repositories.Config
         }
 
         public DbSet<Process> Processes { get; set; }
+        public DbSet<Scheduling> Schedulings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
@@ -26,6 +28,9 @@ namespace ProcessExecutor.Infra.Repositories.Config
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProcessConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskConfiguration());
+            modelBuilder.ApplyConfiguration(new VariableConfiguration());
+            modelBuilder.ApplyConfiguration(new SchedulingConfiguration());
             base.OnModelCreating(modelBuilder);
 
         }

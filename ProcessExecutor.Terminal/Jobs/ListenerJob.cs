@@ -32,34 +32,55 @@ namespace ProcessExecutor.Terminal.Jobs
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
+
+
                     try
                     {
-                        var repository = scope.ServiceProvider.GetService<IProcessRepository>();
-                        if (repository.Has(new CurrentProcessSpecification()))
+                        var processRepository = scope.ServiceProvider.GetService<IProcessRepository>();
+                        if (processRepository.Has(new CurrentProcessSpecification()))
                         {
                             _action();
                         }
                         else
                         {
                             Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Listening...");
-                            if (File.Exists(SchedulerSource))
+
+                            var schedulingRepository = scope.ServiceProvider.GetService<ISchedulingRepository>();
+                            //todo: extract to a service
+                            var schedulings = schedulingRepository.GetAllNotStarted();
+                            if (schedulings.Count == 0)
                             {
-                                var schedule = File.ReadAllText(SchedulerSource);
-                                var date = DateTime.Parse(schedule);
-                                if (date <= now && date >= _lastExecution)
-                                {
-                                    Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Last exection at {_lastExecution}");
-                                    _lastExecution = now;
-                                    _action();
-                                }
+                                return;
                             }
+                            var first = schedulings[0];
+                            var date = first.Date;
+                            if (date <= now && date >= _lastExecution)
+                            {
+                                Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Last exection at {_lastExecution}");
+                                _lastExecution = now;
+                                _action();
+                            }
+
+                            //if (File.Exists(SchedulerSource))
+                            //{
+                            //    var schedule = File.ReadAllText(SchedulerSource);
+                            //    var date = DateTime.Parse(schedule);
+                            //    if (date <= now && date >= _lastExecution)
+                            //    {
+                            //        Console.WriteLine($"[{now}-{nameof(ListenerJob)}] Last exection at {_lastExecution}");
+                            //        _lastExecution = now;
+                            //        _action();
+                            //    }
+                            //}
                         }
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
 
                     }
 
                 }
+
 
             }
         }

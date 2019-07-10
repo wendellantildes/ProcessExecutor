@@ -33,15 +33,20 @@ namespace ProcessExecutor.Infra.Migrations
             modelBuilder.Entity("ProcessExecutor.Domain.Processes.Task", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
 
-                    b.Property<Guid>("ProcessId");
+                    b.Property<Guid>("ProcessId")
+                        .HasColumnName("ProcessId");
 
-                    b.Property<int>("Status");
+                    b.Property<int>("Status")
+                        .HasColumnName("StatusId");
 
-                    b.Property<int>("Step");
+                    b.Property<int>("Step")
+                        .HasColumnName("StepId");
 
-                    b.Property<int>("System");
+                    b.Property<int>("System")
+                        .HasColumnName("SystemId");
 
                     b.HasKey("Id");
 
@@ -53,17 +58,23 @@ namespace ProcessExecutor.Infra.Migrations
             modelBuilder.Entity("ProcessExecutor.Domain.Processes.Variable", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnName("Name");
 
-                    b.Property<Guid?>("ProcessId");
+                    b.Property<Guid?>("ProcessId")
+                        .HasColumnName("ProcessId");
 
-                    b.Property<Guid?>("TaskId");
+                    b.Property<Guid?>("TaskId")
+                        .HasColumnName("TaskId");
 
-                    b.Property<int>("Type");
+                    b.Property<int>("Type")
+                        .HasColumnName("Type");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnName("Value");
 
                     b.HasKey("Id");
 
@@ -72,6 +83,23 @@ namespace ProcessExecutor.Infra.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("Variable");
+                });
+
+            modelBuilder.Entity("ProcessExecutor.Domain.Scheduling", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnName("Date");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnName("Finished");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Scheduling");
                 });
 
             modelBuilder.Entity("ProcessExecutor.Domain.Processes.Task", b =>
